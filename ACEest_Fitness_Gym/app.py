@@ -17,7 +17,6 @@ def members():
     ]
     return jsonify(members_list)
 
-
 # 3 Workouts Route
 @app.route('/workouts')
 def workouts():
