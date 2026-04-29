@@ -1,249 +1,214 @@
-# ACEest Fitness & Gym — DevOps CI/CD Pipeline
+# 🏋️ ACEest Fitness & Gym – DevOps CI/CD Implementation
 
-## Project Overview
+## 📌 Project Overview
 
-This project implements a **Flask-based REST API** for managing ACEest Fitness & Gym services.
-It demonstrates a complete **DevOps workflow** including:
+This project implements a complete DevOps pipeline for **ACEest Fitness & Gym**, focusing on automating the software delivery lifecycle using modern tools and practices.
 
-* Git version control
-* Automated testing using Pytest
-* Docker containerization
-* CI pipeline using GitHub Actions
-* Jenkins build automation
+The system is designed to ensure:
 
-The goal is to showcase how modern DevOps practices automate **build, test, and deployment workflows**.
+* Code integrity
+* Automated testing
+* Consistent deployment environments
+* Faster and reliable delivery
 
 ---
 
-# Local Setup & Execution
+## 🎯 Objective
 
-## Prerequisites
+The primary objective of this assignment is to demonstrate hands-on implementation of:
 
-Install the following tools before running the project:
-
-* Python 3.10+
-* pip
-* Docker Desktop
-* Git
+* Version Control using Git
+* Containerization using Docker
+* Continuous Integration using GitHub Actions
+* Continuous Deployment using Jenkins
 
 ---
 
-## Clone the Repository
-
-```bash
-git clone https://github.com/SanjaiRbits/devops.git
-cd devops
-```
-
----
-
-## Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Run the Flask Application
-
-```bash
-python ACEest_Fitness_Gym/app.py
-```
-
-The application will run at:
+## 🏗️ Project Structure
 
 ```
-http://localhost:5000
-```
-
----
-
-# API Endpoints
-
-| Method | Endpoint          | Description                 |
-| ------ | ----------------- | --------------------------- |
-| GET    | `/`               | Health check                |
-| GET    | `/programs`       | List available gym programs |
-| GET    | `/program/<name>` | Get program details         |
-| POST   | `/calories`       | Calculate calories burned   |
-| GET    | `/clients`        | List all registered clients |
-| POST   | `/clients`        | Add a new client            |
-
----
-
-# Running Tests
-
-This project uses **Pytest** for automated testing.
-
-Run all tests:
-
-```bash
-pytest ACEest_Fitness_Gym/tests
-```
-
-Expected result:
-
-```
-9 passed
-```
-
----
-
-# Docker
-
-## Build Docker Image
-
-```bash
-docker build -t aceest-gym-app .
-```
-
----
-
-## Run Docker Container
-
-```bash
-docker run -p 5000:5000 aceest-gym-app
-```
-
-Application will be available at:
-
-```
-http://localhost:5000
-```
-
----
-
-## Run Tests Inside Container
-
-```bash
-docker run --rm aceest-gym-app pytest ACEest_Fitness_Gym/tests
-```
-
----
-
-# GitHub Actions CI/CD Pipeline
-
-**Workflow File**
-
-```
-.github/workflows/main.yml
-```
-
-## Pipeline Trigger
-
-The CI pipeline runs automatically on:
-
-* Push to the **main branch**
-* Pull requests targeting **main**
-
----
-
-## CI Pipeline Stages
-
-| Stage                | Description                           |
-| -------------------- | ------------------------------------- |
-| Checkout Code        | Retrieves latest code from repository |
-| Setup Python         | Installs Python environment           |
-| Install Dependencies | Installs required Python packages     |
-| Run Pytest           | Executes unit tests                   |
-| Docker Build         | Builds Docker container image         |
-
-The pipeline ensures that **tests pass before Docker images are built**.
-
----
-
-# Jenkins Build Automation
-
-Jenkins is executed locally using Docker.
-
-Start Jenkins:
-
-```bash
-docker run -p 8080:8080 -p 50000:50000 --name jenkins jenkins/jenkins:lts
-```
-
-Access Jenkins at:
-
-```
-http://localhost:8080
-```
-
----
-
-## Jenkins Pipeline Job
-
-**Job Name**
-
-```
-gym-devops-build
-```
-
-### Configuration
-
-| Setting        | Value                                     |
-| -------------- | ----------------------------------------- |
-| Source Control | GitHub Repository                         |
-| Repository URL | https://github.com/SanjaiRbits/devops.git |
-| Branch         | main                                      |
-
----
-
-## Jenkins Build Script
-
-```bash
-pip install -r requirements.txt
-pytest ACEest_Fitness_Gym/tests
-```
-
-Jenkins acts as an **additional quality gate** ensuring all tests pass before builds succeed.
-
----
-
-# Project Structure
-
-```
-devops/
-│
-├── ACEest_Fitness_Gym/
-│   ├── __init__.py
-│   ├── app.py
-│   └── tests/
-│       └── test_app.py
-│
-├── Dockerfile
+aceest-devops-assignment/
+├── app/                    # Flask application (core backend)
+├── aceest_desktop/         # Legacy desktop application (unchanged)
+├── dockerfile              # Docker configuration files
+├── .github/workflows/      # CI pipeline (GitHub Actions)
+├── Jenkinsfile             # CD pipeline (Jenkins)
+├── docker-compose.yml
 ├── requirements.txt
-├── README.md
-├── .dockerignore
-├── .gitignore
-│
-└── .github/
-    └── workflows/
-        └── main.yml
+├── run.py
+└── README.md
 ```
 
 ---
 
-# DevOps Workflow
+## 🧱 System Architecture
 
 ```
-Developer pushes code to GitHub
-        ↓
-GitHub Actions CI pipeline runs
-        ↓
-Dependencies installed
-        ↓
-Pytest executes automated tests
-        ↓
-Docker image is built
-        ↓
-Jenkins pulls repository and verifies build
+Developer → Git → GitHub → CI (GitHub Actions) → Docker → CD (Jenkins) → Running App
+```
+
+### Explanation:
+
+1. Developer writes code locally
+2. Code is committed and pushed to GitHub
+3. CI pipeline is triggered automatically
+4. Docker image is built
+5. Jenkins deploys the application
+6. Application becomes available to users
+
+---
+
+## ⚙️ Application Details
+
+### 🔹 Flask Application
+
+* Acts as the main backend system
+* Provides API endpoints for:
+
+  * Member management
+  * Health checks
+* Organized using modular architecture:
+
+  * Routes
+  * Services
+  * Models
+
+### 🔹 Legacy Desktop Application
+
+* Stored in `aceest_desktop/`
+* Contains multiple versioned `.py` files
+* **Not executed in CI/CD pipeline**
+* Maintained for reference and traceability
+
+---
+
+## 🔄 CI/CD Pipeline
+
+### 🚀 Continuous Integration (CI)
+
+Implemented using GitHub Actions:
+
+* Installs dependencies
+* Runs unit tests
+* Builds Docker image
+
+### 🚀 Continuous Deployment (CD)
+
+Implemented using Jenkins:
+
+* Pulls latest code/image
+* Runs Docker container
+* Deploys application
+
+---
+
+## 🐳 Docker Implementation
+
+Docker is used to:
+
+* Package the application
+* Ensure environment consistency
+* Enable easy deployment
+
+### Build Docker Image
+
+```
+docker build -t aceest-app .
+```
+
+### Run Container
+
+```
+docker run -p 8000:8000 aceest-app
 ```
 
 ---
 
-# Student Details
+## ▶️ Running the Project Locally
 
-**Student ID:** 2024tm93548
-**Course:** Introduction to DevOps (CSIZG514 / SEZG514)
-**Institution:** BITS Pilani WILP
+### Step 1: Clone Repository
+
+```
+git clone <your-repo-url>
+cd aceest-devops-assignment
+```
+
+### Step 2: Setup Environment
+
+```
+python -m venv venv
+source venv/bin/activate   # (Linux/Mac)
+venv\Scripts\activate      # (Windows)
+pip install -r requirements.txt
+```
+
+### Step 3: Run Flask App
+
+```
+python run.py
+```
+
+Access:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## 🧪 Running Tests
+
+```
+pytest
+```
+
+---
+
+## 🔁 Version Control Strategy
+
+* All code changes are tracked using Git
+* Each feature is committed separately
+* Clear commit messages are used
+
+### Example Commits:
+
+* `feat: added Flask routes`
+* `feat: implemented services layer`
+* `ci: added GitHub Actions workflow`
+* `feat: dockerized application`
+
+---
+
+## 🔐 Key DevOps Benefits Achieved
+
+* ✅ Automated build and testing
+* ✅ Consistent environments via Docker
+* ✅ Faster deployment using CI/CD
+* ✅ Clear version tracking using Git
+
+---
+
+## 🧠 Key Learnings
+
+* Understanding of complete DevOps lifecycle
+* Hands-on experience with CI/CD pipelines
+* Containerization and deployment automation
+* Separation of application logic and infrastructure
+
+---
+
+## 📌 Conclusion
+
+This project successfully demonstrates the implementation of a modern DevOps pipeline.
+The integration of Git, GitHub Actions, Docker, and Jenkins ensures a scalable, reliable, and automated software delivery process.
+
+---
+
+## 👨‍💻 Author
+
+Student Name: Parmeet Singh
+BITSID: 2024TM93533
+Course: DevOps Assignment
+Organization: ACEest Fitness & Gym
+
+---
